@@ -1,4 +1,5 @@
-pub trait UnmutableCoordinate<T>{
+
+pub trait Coordinate<T>{
     fn new(x:T,y:T) -> Self;
     fn get_x(&self) -> T;
     fn get_y(&self) -> T;
@@ -9,9 +10,9 @@ pub trait UnmutableCoordinate<T>{
     fn product(&self, altcoordinate: &Self) -> Self;
     fn true_div(&self, altcoordinate: &Self) -> Self;
     fn equal(&self, altcoordinate: &Self) -> bool;
-    fn c_mod(&self, altcoordinate: &Self) -> Self;
+    fn c_mod(&self, altcoordinate: &Self) -> T;
+    fn destroy(&self) ->();
 }
-
 pub trait MutableCoordinate<T>{
     fn new(x:T,y:T) -> Self;
     fn get_x(&self) -> T;
@@ -26,22 +27,10 @@ pub trait MutableCoordinate<T>{
     fn c_mod(&mut self, altcoordinate: &Self) -> T;
     fn set_x(&mut self, x: T) -> ();
     fn set_y(&mut self, y: T) -> ();
+    fn destroy(&self) ->();
 
 }
 
-pub trait Coordinate<T>{
-    fn new(x:T,y:T) -> Self;
-    fn get_x(&self) -> T;
-    fn get_y(&self) -> T;
-    fn negative(&self) -> Self;
-    fn distancia(&self, altcoordinate: &Self) -> T;
-    fn add(&self, altcoordinate: &Self) -> Self;
-    fn sub(&self, altcoordinate: &Self) -> Self;
-    fn product(&self, altcoordinate: &Self) -> Self;
-    fn true_div(&self, altcoordinate: &Self) -> Self;
-    fn equal(&self, altcoordinate: &Self) -> bool;
-    fn c_mod(&self, altcoordinate: &Self) -> T;
-}
 pub trait Modificable<T> {
 
     fn set_x(&mut self, x: T) -> ();

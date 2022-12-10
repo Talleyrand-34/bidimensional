@@ -43,8 +43,8 @@ impl Coordinate<f32> for SafeCoordinate{
     fn get_y(&self) -> f32 { self.y }
     
     fn distancia(&self, altcoordinate: &SafeCoordinate) -> f32 {
-        let dif_x = self.x - altcoordinate.x;
-        let dif_y = self.y - altcoordinate.y;
+        let dif_x:f32 = self.x - altcoordinate.x;
+        let dif_y:f32 = self.y - altcoordinate.y;
         (dif_x.powi(2) + dif_y.powi(2)).sqrt()
     }
     
@@ -79,6 +79,9 @@ impl Coordinate<f32> for SafeCoordinate{
 
     fn c_mod(&self, altcoordinate: &SafeCoordinate) -> f32 {
         return self.x%altcoordinate.x + self.y%altcoordinate.y;
+    }
+    fn destroy(&self) ->() {
+        drop(&self);
     }
 
 }
