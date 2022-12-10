@@ -42,9 +42,9 @@ impl Coordinate<f32> for SafeCoordinate{
 
     fn get_y(&self) -> f32 { self.y }
     
-    fn distancia(&self, sec_Coordinate: &SafeCoordinate) -> f32 {
-        let dif_x = self.x - sec_Coordinate.x;
-        let dif_y = self.y - sec_Coordinate.y;
+    fn distancia(&self, altcoordinate: &SafeCoordinate) -> f32 {
+        let dif_x = self.x - altcoordinate.x;
+        let dif_y = self.y - altcoordinate.y;
         (dif_x.powi(2) + dif_y.powi(2)).sqrt()
     }
     
@@ -53,32 +53,32 @@ impl Coordinate<f32> for SafeCoordinate{
         return new_c;
     }
     
-    fn add(&self, sec_Coordinate: &SafeCoordinate) -> SafeCoordinate{
-        let new_c:SafeCoordinate= SafeCoordinate{x:self.x + sec_Coordinate.x, y:self.y + sec_Coordinate.y};
+    fn add(&self, altcoordinate: &SafeCoordinate) -> SafeCoordinate{
+        let new_c:SafeCoordinate= SafeCoordinate{x:self.x + altcoordinate.x, y:self.y + altcoordinate.y};
         return new_c;
     }
     
-    fn sub(&self, sec_Coordinate: &SafeCoordinate) -> SafeCoordinate{
-        let new_c:SafeCoordinate= SafeCoordinate{x:self.x - sec_Coordinate.x, y:self.y - sec_Coordinate.y};
+    fn sub(&self, altcoordinate: &SafeCoordinate) -> SafeCoordinate{
+        let new_c:SafeCoordinate= SafeCoordinate{x:self.x - altcoordinate.x, y:self.y - altcoordinate.y};
         return new_c;
     }
     
-    fn product(&self, sec_Coordinate: &SafeCoordinate) -> SafeCoordinate {
-        let new_c:SafeCoordinate= SafeCoordinate{x:self.x * sec_Coordinate.x, y:self.y * sec_Coordinate.y};
+    fn product(&self, altcoordinate: &SafeCoordinate) -> SafeCoordinate {
+        let new_c:SafeCoordinate= SafeCoordinate{x:self.x * altcoordinate.x, y:self.y * altcoordinate.y};
         return new_c;
     }
     
-    fn true_div(&self, sec_Coordinate: &SafeCoordinate) -> SafeCoordinate{
-        let new_c:SafeCoordinate= SafeCoordinate{x:self.x * sec_Coordinate.x, y:self.y * (-sec_Coordinate.y)};
+    fn true_div(&self, altcoordinate: &SafeCoordinate) -> SafeCoordinate{
+        let new_c:SafeCoordinate= SafeCoordinate{x:self.x * altcoordinate.x, y:self.y * (-altcoordinate.y)};
         return new_c;
     }
 
-    fn equal(&self, sec_Coordinate: &SafeCoordinate) -> bool{
-        return self.x == sec_Coordinate.x && self.y == sec_Coordinate.y;
+    fn equal(&self, altcoordinate: &SafeCoordinate) -> bool{
+        return self.x == altcoordinate.x && self.y == altcoordinate.y;
     }
 
-    fn c_mod(&self, sec_Coordinate: &SafeCoordinate) -> SafeCoordinate {
-        return self.x%sec_Coordinate.x + self.y%sec_Coordinate.y;
+    fn c_mod(&self, altcoordinate: &SafeCoordinate) -> f32 {
+        return self.x%altcoordinate.x + self.y%altcoordinate.y;
     }
 
 }
