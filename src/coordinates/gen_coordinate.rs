@@ -30,10 +30,3 @@ pub trait MutableCoordinate<T>{
     fn destroy(&self) ->();
 
 }
-
-pub trait Modificable<T> {
-
-    fn set_x(&mut self, x: T) -> ();
-    fn set_y(&mut self, y: T) -> ();
-
-}
