@@ -58,7 +58,28 @@ impl OpCoordinates<f32> for UnsafeCoordinate{
     fn equal(&self, altcoordinate: &Self) -> bool {
         return self.x == altcoordinate.x && self.y== altcoordinate.y;
     }
-    fn c_mod(&self, altcoordinate: &Self) -> f32 {
-        return self.x%altcoordinate.x + self.y%altcoordinate.y;
+    fn equiv(&self, altcoordinate: &Self) -> bool {
+        let x:f32;
+        let y:f32;
+        if altcoordinate.x!=0.0 {
+            x = self.x/altcoordinate.x;
+        }
+        else if self.x!=0.0 {
+            x = altcoordinate.x/self.x;
+        }
+        else {
+            x=0.0;
+        }
+        if altcoordinate.y!=0.0 {
+            y= self.y/altcoordinate.y;
+        }
+        else if self.y!=0.0 {
+            y = altcoordinate.y/self.y;
+        }
+        else {
+            y=0.0;
+         }
+
+        return x==y;
     }
 }
