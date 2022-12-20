@@ -23,8 +23,10 @@ From now on, this structure will be referred as "SafeCoordinate".
 
 
 
+
+
 //mod gen_SafeCoordinate;
-use super::gen_coordinate::Coordinate;
+use super::gen_coordinate::CoordinateBasics;
 use super::gen_coordinate::UnmutableCoordinate;
 use super::gen_coordinate::OpCoordinates;
 
@@ -32,10 +34,13 @@ use super::gen_coordinate::OpCoordinates;
 
 pub struct SafeCoordinate{
     x: f32,
-    y: f32
+    y: f32,
+    //x: f32,
+    //y: f32,
+    //marker: PhantomData<f32>
 }
 
-impl Coordinate<f32> for SafeCoordinate{
+impl CoordinateBasics<f32> for SafeCoordinate{
 
     fn new (x: f32, y: f32) -> SafeCoordinate{
     return SafeCoordinate{x:x,y:y};
@@ -84,7 +89,7 @@ impl UnmutableCoordinate<f32> for SafeCoordinate{
 }
 
 
-impl OpCoordinates<f32> for SafeCoordinate {
+impl OpCoordinates<f32> for SafeCoordinate{
     fn distancia(&self, altcoordinate: &SafeCoordinate) -> f32 {
         let dif_x:f32 = self.x - altcoordinate.x;
         let dif_y:f32 = self.y - altcoordinate.y;
