@@ -89,7 +89,7 @@ impl UnmutableCoordinate<f32> for SafeCoordinate{
 }
 
 
-impl OpCoordinates<f32> for SafeCoordinate{
+/*impl OpCoordinates<f32> for SafeCoordinate{
     fn distancia(&self, altcoordinate: &SafeCoordinate) -> f32 {
         let dif_x:f32 = self.x - altcoordinate.x;
         let dif_y:f32 = self.y - altcoordinate.y;
@@ -151,7 +151,7 @@ fn test_safe_coordinate_operations() {
     
 
 
-}
+}*/
 
 #[test]
 fn test_safe_coordinate_basics() {

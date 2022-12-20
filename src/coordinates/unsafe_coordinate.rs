@@ -53,7 +53,7 @@ impl MutableCoordinate<f32> for UnsafeCoordinate {
     }
 }
 
-
+/*
 impl OpCoordinates<f32> for UnsafeCoordinate{
     fn distancia(&self, otro: &UnsafeCoordinate) -> f32 {
         let difx:f32 = self.x - otro.x;
@@ -112,7 +112,7 @@ fn test_safe_coordinate_operations() {
     
 
 
-}
+}*/
 
 #[test]
 fn test_safe_coordinate_basics() {
@@ -122,73 +122,82 @@ fn test_safe_coordinate_basics() {
     assert_eq!(2.0, coord.get_y());
     coord.destroy();
 }
-
 #[test]
 fn test_safe_coordinate_core() {
-    let var_x:f32=1.0;
-    let var_y:f32=2.0;
-    //En los tests no se ponen los tipos
-    let mut coord :UnsafeCoordinate=UnsafeCoordinate::new(var_x,var_y);
-    coord.negative();
-    assert_eq!(-var_x,coord.get_x());
-    assert_eq!(-var_y,coord.get_y());
+    let var_x: f32 = 1.0;
+    let var_y: f32 = 2.0;
+let mut coordb: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    //let coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    coordb.negative();
+    assert_eq!(-var_x, coordb.get_x());
+    assert_eq!(-var_y, coordb.get_y());
+
+    let mut coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    coord.add(&coordb);
+    assert_eq!(2.0 * var_x, coord.get_x());
+    assert_eq!(2.0 * var_y, coord.get_y());
+
+    let mut coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    coord.sub(&coordb);
+    assert_eq!(0.0, coord.get_x());
+    assert_eq!(0.0, coord.get_y());
+
+    coord.sub(&coordb);
+    assert_eq!(-var_x, coord.get_x());
+    assert_eq!(-var_y, coord.get_y());
+
     coord.set_x(var_x);
     coord.set_y(var_y);
-    coord.add(&mut coord);
-    assert_eq!(2.0*var_x,coord.get_x());
-    assert_eq!(2.0*var_y,coord.get_y());
+    coord.product(&coordb);
+    assert_eq!(var_x * var_x, coord.get_x());
+    assert_eq!(var_y * var_y, coord.get_y());
+
     coord.set_x(var_x);
     coord.set_y(var_y);
-    coord.sub(&coord);
-    assert_eq!(0.0,coord.get_x());
-    assert_eq!(0.0,coord.get_y());
-    coord.sub(&coord);
-    assert_eq!(-var_x,coord.get_x());
-    assert_eq!(-var_y,coord.get_y());
-    coord.set_x(var_x);
-    coord.set_y(var_y);
-    coord.product(&coord);
-    assert_eq!(var_x*var_x,coord.get_x());
-    assert_eq!(var_y*var_y,coord.get_y());
-    coord.set_x(var_x);
-    coord.set_y(var_y);
-    coord.true_div(&coord);
-    assert_eq!(var_x*var_x,coord.get_x());
-    assert_eq!(-var_y*var_y,coord.get_y());
+    coord.true_div(&coordb);
+    assert_eq!(1.0, coord.get_x());
+    assert_eq!(-1.0, coord.get_y());
+
     coord.destroy();
+    coordb.destroy();
 }
 
 #[test]
 fn test_safe_coordinate_core2() {
-    let var_x:f32=54.0;
-    let var_y:f32=-32.0;
-    //En los tests no se ponen los tipos
-    let coord :UnsafeCoordinate=UnsafeCoordinate::new(var_x,var_y);
-    coord.negative();
-    assert_eq!(-var_x,coord.get_x());
-    assert_eq!(-var_y,coord.get_y());
+    let var_x: f32 = 54.0;
+    let var_y: f32 = -32.0;
+    let mut coordb: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    //let coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    coordb.negative();
+    assert_eq!(-var_x, coordb.get_x());
+    assert_eq!(-var_y, coordb.get_y());
+
+    let mut coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    coord.add(&coordb);
+    assert_eq!(2.0 * var_x, coord.get_x());
+    assert_eq!(2.0 * var_y, coord.get_y());
+
+    let mut coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    coord.sub(&coordb);
+    assert_eq!(0.0, coord.get_x());
+    assert_eq!(0.0, coord.get_y());
+
+    coord.sub(&coordb);
+    assert_eq!(-var_x, coord.get_x());
+    assert_eq!(-var_y, coord.get_y());
+
     coord.set_x(var_x);
     coord.set_y(var_y);
-    coord.add(&coord);
-    assert_eq!(2.0*var_x,coord.get_x());
-    assert_eq!(2.0*var_y,coord.get_y());
+    coord.product(&coordb);
+    assert_eq!(var_x * var_x, coord.get_x());
+    assert_eq!(var_y * var_y, coord.get_y());
+
     coord.set_x(var_x);
     coord.set_y(var_y);
-    coord.sub(&coord);
-    assert_eq!(0.0,coord.get_x());
-    assert_eq!(0.0,coord.get_y());
-    coord.sub(&coord);
-    assert_eq!(-var_x,coord.get_x());
-    assert_eq!(-var_y,coord.get_y());
-    coord.set_x(var_x);
-    coord.set_y(var_y);
-    coord.product(&coord);
-    assert_eq!(var_x*var_x,coord.get_x());
-    assert_eq!(var_y*var_y,coord.get_y());
-    coord.set_x(var_x);
-    coord.set_y(var_y);
-    coord.true_div(&coord);
-    assert_eq!(var_x*var_x,coord.get_x());
-    assert_eq!(-var_y*var_y,coord.get_y());
+    coord.true_div(&coordb);
+    assert_eq!(1.0, coord.get_x());
+    assert_eq!(-1.0, coord.get_y());
+
     coord.destroy();
+    coordb.destroy();
 }
