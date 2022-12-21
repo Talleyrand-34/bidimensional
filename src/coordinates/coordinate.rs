@@ -46,7 +46,7 @@ impl ECoordinate {
 
     fn negative_mut(&mut self) -> bool {
         match self {
-            ECoordinate::Unsafe(ref mut coord) => {
+            ECoordinate::Unsafe(coord) => {
                 coord.negative();
                 true
             }
