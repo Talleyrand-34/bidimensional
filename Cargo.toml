@@ -1,6 +1,6 @@
 [package]
 name = "bidimensional"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2021"
 authors=["Talleyrand-34 <talleyrand-34@tutanota.com>"]
 description="A collection of 2D utilities for coordinate representation and manipulation"

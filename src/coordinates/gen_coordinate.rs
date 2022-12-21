@@ -1,6 +1,12 @@
 
-/// This Trait implements the basic logic over a coordinate and works like a common identifier
-/// for the coordinates on external applications.
+//! CoordinateBasics Trait implements the basic logic over a coordinate and works like a common identifier
+//! for the coordinates on external applications.
+//!  This trait defines the basic logic over a unmutable version of a coordinate.
+//! UnmutableCoordinate is to follow the unmutability principle to prevent error and matain consistency
+//! on build up applications.
+//! MutableCoordinate trait defines the basic logic over a mutable version of a coordinate.
+//! This is for those applications that prefer speed over consistency.
+//! 
 pub trait CoordinateBasics<T>{
     /// create a new coordinate
     fn new(x:T,y:T) -> Self;
@@ -15,9 +21,8 @@ pub trait CoordinateBasics<T>{
     
     
 }
-/// This trait defines the basic logic over a unmutable version of a coordinate.
-/// This is to follow the unmutability principle to prevent error and matain consistency
-/// on build up applications.
+
+
 pub trait UnmutableCoordinate<T>{
     /// create a new unmutable coordinate which parameters are negative 
     fn negative(&self) -> Self;    
@@ -31,8 +36,7 @@ pub trait UnmutableCoordinate<T>{
     fn true_div(&self, altcoordinate: &Self) -> Self;
 }
 
-/// This trait defines the basic logic over a mutable version of a coordinate.
-/// This is for those applications that prefer speed over consistency.
+/// 
 pub trait MutableCoordinate<T>{
     /// converts the coordinate into its negative representation
     fn negative(&mut self) -> ();

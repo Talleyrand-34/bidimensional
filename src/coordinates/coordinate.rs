@@ -1,6 +1,8 @@
 // first thing to do is a getter to simplify code
 
-use super::gen_coordinate::CoordinateBasics;
+use std::sync::Arc;
+
+use super::gen_coordinate::{CoordinateBasics, UnmutableCoordinate, MutableCoordinate};
 use super::unsafe_coordinate::UnsafeCoordinate;
 use super::safe_coordinate::SafeCoordinate;
 
@@ -17,6 +19,7 @@ pub enum ECoordinate {
 
 impl ECoordinate {
     
+    
     fn get_x(&self) -> Option<f32> {
         match self {
             ECoordinate::Safe(coord) => Some(coord.get_x()),
@@ -32,6 +35,100 @@ impl ECoordinate {
             _ => None,
         }
     }
+    
+
+    fn negative(&self) -> Option<Self> {
+        match self {
+            ECoordinate::Safe(coord) => Some(ECoordinate::Safe(coord.negative())),
+            _ => None,
+        }
+    }
+
+    fn negative_mut(&mut self) -> bool {
+        match self {
+            ECoordinate::Unsafe(ref mut coord) => {
+                coord.negative();
+                true
+            }
+            _ => false,
+        }
+    }
+
+
+    fn add(&self, altcoordinate: &Self) -> Option<Self> {
+        match (self, altcoordinate) {
+            (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
+                Some(ECoordinate::Safe(coord1.add(coord2)))
+            },
+            _ => None,
+        }
+    }
+    
+    fn add_mut(&mut self, altcoordinate: &Self) -> bool {
+        match (self, altcoordinate) {
+            (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
+                coord1.add(coord2);
+                true
+            }
+            _ => false,
+        }
+    }
+    fn sub(&self, altcoordinate: &Self) -> Option<Self> {
+        match (self, altcoordinate) {
+            (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
+                Some(ECoordinate::Safe(coord1.sub(coord2)))
+            },
+            _ => None,
+        }
+    }
+    
+    fn sub_mut(&mut self, altcoordinate: &Self) -> bool {
+        match (self, altcoordinate) {
+            (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
+                coord1.sub(coord2);
+                true
+            }
+            _ => false,
+        }
+    }
+    fn product(&self, altcoordinate: &Self) -> Option<Self> {
+        match (self, altcoordinate) {
+            (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
+                Some(ECoordinate::Safe(coord1.product(coord2)))
+            },
+            _ => None,
+        }
+    }
+    
+    fn product_mut(&mut self, altcoordinate: &Self) -> bool {
+        match (self, altcoordinate) {
+            (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
+                coord1.product(coord2);
+                true
+            }
+            _ => false,
+        }
+    }
+
+    fn true_div(&self, altcoordinate: &Self) -> Option<Self> {
+        match (self, altcoordinate) {
+            (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
+                Some(ECoordinate::Safe(coord1.true_div(coord2)))
+            },
+            _ => None,
+        }
+    }
+    
+    fn true_div_mut(&mut self, altcoordinate: &Self) -> bool {
+        match (self, altcoordinate) {
+            (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
+                coord1.true_div(coord2);
+                true
+            }
+            _ => false,
+        }
+    }
+
     
 
     
@@ -110,8 +207,68 @@ fn equiv(&self, altcoordinate: &Self) -> bool {
 
 
 
+
 #[test]
 fn test_safe_coordinate_operations() {
+    let var_x1:f32=14.0;
+    let var_y1:f32=20.0;
+    let var_x2:f32=-13.0;
+    let var_y2:f32=12.0;
+    //En los tests no se ponen los tipos
+    let coord1 : ECoordinate=  ECoordinate::Safe(SafeCoordinate::new(var_x1,var_y1));
+    let coord2 :ECoordinate=ECoordinate::Safe(SafeCoordinate::new(var_x2,var_y2));
+
+    let coord3:ECoordinate=coord1.add(&coord2).unwrap();
+    let coord4:ECoordinate=coord1.sub(&coord2).unwrap();
+    let coord5:ECoordinate=coord1.product(&coord2).unwrap();
+    let coord6:ECoordinate=coord1.true_div(&coord2).unwrap();
+
+    
+    assert_eq!(var_x1+var_x2,coord3.get_x().unwrap());
+    assert_eq!(var_y1+var_y2,coord3.get_y().unwrap());
+    assert_eq!(var_x1-var_x2,coord4.get_x().unwrap());
+    assert_eq!(var_y1-var_y2,coord4.get_y().unwrap());
+    assert_eq!(var_x1*var_x2,coord5.get_x().unwrap());
+    assert_eq!(var_y1*var_y2,coord5.get_y().unwrap());
+    assert_eq!(var_x1*var_x2,coord6.get_x().unwrap());
+    assert_eq!(var_y1*(-var_y2),coord6.get_y().unwrap());
+
+
+}
+
+
+#[test]
+fn test_unsafe_coordinate_basic_operations() {
+    let var_x1:f32=14.0;
+    let var_y1:f32=20.0;
+    let var_x2:f32=-13.0;
+    let var_y2:f32=12.0;
+    //En los tests no se ponen los tipos
+    //let mut coord1 : ECoordinate=  ECoordinate::Unsafe(UnsafeCoordinate::new(var_x1,var_y1));
+    let coord2 :ECoordinate=ECoordinate::Unsafe(UnsafeCoordinate::new(var_x2,var_y2));
+
+    let mut coord3:ECoordinate=ECoordinate::Unsafe(UnsafeCoordinate::new(var_x1,var_y1));//coord1.add(&coord2).unwrap();
+    let mut coord4:ECoordinate=ECoordinate::Unsafe(UnsafeCoordinate::new(var_x1,var_y1));//coord1.sub(&coord2).unwrap();
+    let mut coord5:ECoordinate=ECoordinate::Unsafe(UnsafeCoordinate::new(var_x1,var_y1));//coord1.product(&coord2).unwrap();
+    let mut coord6:ECoordinate=ECoordinate::Unsafe(UnsafeCoordinate::new(var_x1,var_y1));//coord1.true_div(&coord2).unwrap();
+    coord3.add_mut(&coord2);
+    coord4.sub_mut(&coord2);
+    coord5.product_mut(&coord2);
+    coord6.true_div_mut(&coord2);
+    assert_eq!(var_x1+var_x2,coord3.get_x().unwrap());
+    assert_eq!(var_y1+var_y2,coord3.get_y().unwrap());
+    assert_eq!(var_x1-var_x2,coord4.get_x().unwrap());
+    assert_eq!(var_y1-var_y2,coord4.get_y().unwrap());
+    assert_eq!(var_x1*var_x2,coord5.get_x().unwrap());
+    assert_eq!(var_y1*var_y2,coord5.get_y().unwrap());
+    assert_eq!(var_x1*var_x2,coord6.get_x().unwrap());
+    assert_eq!(var_y1*(-var_y2),coord6.get_y().unwrap());
+
+
+}
+
+#[test]
+fn test_safe_2_coordinate_operations() {
     let var_x1:f32=14.0;
     let var_y1:f32=20.0;
     let var_x2:f32=-13.0;
@@ -133,7 +290,7 @@ fn test_safe_coordinate_operations() {
 }
 
 #[test]
-fn test_unsafe_coordinate_operations() {
+fn test_unsafe_2_coord_operations(){
     let var_x1:f32=14.0;
     let var_y1:f32=20.0;
     let var_x2:f32=-13.0;
@@ -152,4 +309,7 @@ fn test_unsafe_coordinate_operations() {
     assert_eq!(true,eq);
     assert_eq!(false,c_mod);
     assert_eq!(true,c_mod_reg);
+
+
 }
+
