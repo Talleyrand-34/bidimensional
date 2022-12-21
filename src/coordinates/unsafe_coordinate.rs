@@ -115,7 +115,7 @@ fn test_safe_coordinate_operations() {
 }*/
 
 #[test]
-fn test_safe_coordinate_basics() {
+fn test_unsafe_coordinate_basics() {
     //En los tests no se ponen los tipos
     let coord :UnsafeCoordinate=UnsafeCoordinate::new(1.0,2.0);
     assert_eq!(1.0, coord.get_x());
@@ -123,14 +123,14 @@ fn test_safe_coordinate_basics() {
     coord.destroy();
 }
 #[test]
-fn test_safe_coordinate_core() {
+fn test_unsafe_coordinate_core() {
     let var_x: f32 = 1.0;
     let var_y: f32 = 2.0;
-let mut coordb: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
-    //let coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
-    coordb.negative();
-    assert_eq!(-var_x, coordb.get_x());
-    assert_eq!(-var_y, coordb.get_y());
+    let coordb: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    let mut coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    coord.negative();
+    assert_eq!(-var_x, coord.get_x());
+    assert_eq!(-var_y, coord.get_y());
 
     let mut coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
     coord.add(&coordb);
@@ -155,22 +155,22 @@ let mut coordb: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
     coord.set_x(var_x);
     coord.set_y(var_y);
     coord.true_div(&coordb);
-    assert_eq!(1.0, coord.get_x());
-    assert_eq!(-1.0, coord.get_y());
+    assert_eq!(var_x*var_x, coord.get_x());
+    assert_eq!(var_y*(-var_y), coord.get_y());
 
     coord.destroy();
     coordb.destroy();
 }
 
 #[test]
-fn test_safe_coordinate_core2() {
+fn test_unsafe_coordinate_core2() {
     let var_x: f32 = 54.0;
     let var_y: f32 = -32.0;
-    let mut coordb: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
-    //let coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
-    coordb.negative();
-    assert_eq!(-var_x, coordb.get_x());
-    assert_eq!(-var_y, coordb.get_y());
+    let coordb: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    let mut coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
+    coord.negative();
+    assert_eq!(-var_x, coord.get_x());
+    assert_eq!(-var_y, coord.get_y());
 
     let mut coord: UnsafeCoordinate = UnsafeCoordinate::new(var_x, var_y);
     coord.add(&coordb);
@@ -195,9 +195,9 @@ fn test_safe_coordinate_core2() {
     coord.set_x(var_x);
     coord.set_y(var_y);
     coord.true_div(&coordb);
-    assert_eq!(1.0, coord.get_x());
-    assert_eq!(-1.0, coord.get_y());
-
+    assert_eq!(var_x*var_x, coord.get_x());
+    assert_eq!(var_y*(-var_y), coord.get_y());
+    
     coord.destroy();
     coordb.destroy();
 }
