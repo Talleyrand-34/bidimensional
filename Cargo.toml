@@ -8,4 +8,5 @@ license="AGPL-3.0-or-later"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+doc = "0.0.0"
 
