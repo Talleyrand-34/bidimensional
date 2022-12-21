@@ -6,7 +6,7 @@
 
 use super::gen_coordinate::CoordinateBasics;
 use super::gen_coordinate::MutableCoordinate;
-use super::gen_coordinate::OpCoordinates;
+
 
 pub struct UnsafeCoordinate{
     x: f32,
@@ -197,7 +197,7 @@ fn test_unsafe_coordinate_core2() {
     coord.true_div(&coordb);
     assert_eq!(var_x*var_x, coord.get_x());
     assert_eq!(var_y*(-var_y), coord.get_y());
-    
+
     coord.destroy();
     coordb.destroy();
 }

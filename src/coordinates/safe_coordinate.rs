@@ -28,7 +28,6 @@ From now on, this structure will be referred as "SafeCoordinate".
 //mod gen_SafeCoordinate;
 use super::gen_coordinate::CoordinateBasics;
 use super::gen_coordinate::UnmutableCoordinate;
-use super::gen_coordinate::OpCoordinates;
 
 
 
