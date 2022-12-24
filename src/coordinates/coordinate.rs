@@ -1,6 +1,6 @@
 // first thing to do is a getter to simplify code
 
-use std::sync::Arc;
+
 
 use super::gen_coordinate::{CoordinateBasics, UnmutableCoordinate, MutableCoordinate};
 use super::unsafe_coordinate::UnsafeCoordinate;
@@ -190,7 +190,13 @@ fn equiv(&self, altcoordinate: &Self) -> bool {
         }
     }
     
-    
+   
+    fn midpoint(&self, coord2: &Self) -> Option<ECoordinate> {
+        match (self.get_x(), self.get_y(), coord2.get_x(), coord2.get_y()) {
+            (Some(x1), Some(y1), Some(x2), Some(y2)) => Some(ECoordinate::Safe(SafeCoordinate::new((x1 + x2)/2.0, (y1 + y2)/2.0))),
+            _ => None, 
+        }
+    }
     // En el futuro esto se puede extender de la forma:
     //match self {
     //eCoordinate::Safe(safe_coord) => {
