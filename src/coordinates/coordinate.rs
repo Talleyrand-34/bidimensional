@@ -2,13 +2,16 @@
 
 
 
+use std::ops::Mul;
+
 use super::gen_coordinate::{CoordinateBasics, UnmutableCoordinate, MutableCoordinate};
 use super::unsafe_coordinate::UnsafeCoordinate;
 use super::safe_coordinate::SafeCoordinate;
 
 #[doc = "Esta es la enumeración `ECoordinate`."]
 
-pub enum ECoordinate<T> {
+pub enum ECoordinate<T> where
+T: Mul<Output = T> + Copy,{
     /// Una variante que representa una coordenada segura.
     Safe(SafeCoordinate),
     /// Una variante que representa una coordenada insegura.
@@ -17,10 +20,11 @@ pub enum ECoordinate<T> {
 
 
 
-impl<T> ECoordinate<T> {
+impl<T> ECoordinate<T> where
+T: Mul<Output = T> + Copy,{
     
     
-    fn get_x(&self) -> Option<f32> {
+    fn get_x(&self) -> Option<T> {
         match self {
             ECoordinate::Safe(coord) => Some(coord.get_x()),
             ECoordinate::Unsafe(coord) => Some(coord.get_x()),
@@ -28,7 +32,7 @@ impl<T> ECoordinate<T> {
         }
     }
 
-    fn get_y(&self) -> Option<f32> {
+    fn get_y(&self) -> Option<T> {
         match self {
             ECoordinate::Safe(coord) => Some(coord.get_y()),
             ECoordinate::Unsafe(coord) => Some(coord.get_y()),
@@ -191,7 +195,7 @@ fn equiv(&self, altcoordinate: &Self) -> bool {
     }
     
    
-    fn midpoint(&self, coord2: &Self) -> Option<ECoordinate> {
+    fn midpoint(&self, coord2: &Self) -> Option<ECoordinate<T>> {
         match (self.get_x(), self.get_y(), coord2.get_x(), coord2.get_y()) {
             (Some(x1), Some(y1), Some(x2), Some(y2)) => Some(ECoordinate::Safe(SafeCoordinate::new((x1 + x2)/2.0, (y1 + y2)/2.0))),
             _ => None, 

@@ -1,11 +1,13 @@
 use crate::PVec;
-
-pub enum Polygon<T> {
+use std::ops::Mul;
+pub enum Polygon<T> where
+    T: Mul<Output = T> + Copy,
+    {
     PVec(PVec<T>),
     //Array
     //LnkList
     //BHeap 
-}
+    }
 
 impl<T> Polygon<T> {
 
@@ -18,6 +20,7 @@ impl<T> Polygon<T> {
     }
 
     pub fn add_point_single(&mut self, x:T, y:T) {
+        ECoordinate<T> new_point=ECoordinate::Safe(x,y);
         match self{
             Polygon::PVec(p)=>{
                 p.push(x);},

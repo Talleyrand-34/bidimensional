@@ -7,7 +7,10 @@
 //! MutableCoordinate trait defines the basic logic over a mutable version of a coordinate.
 //! This is for those applications that prefer speed over consistency.
 //! 
-pub trait CoordinateBasics<T>{
+
+use std::ops::Mul;
+pub trait CoordinateBasics<T>where
+    T: Mul<Output = T> + Copy,{
     /// create a new coordinate
     fn new(x:T,y:T) -> Self;
     /// get the x axis parameter
@@ -23,7 +26,8 @@ pub trait CoordinateBasics<T>{
 }
 
 
-pub trait UnmutableCoordinate<T>{
+pub trait UnmutableCoordinate<T>where
+T: Mul<Output = T> + Copy,{
     /// create a new unmutable coordinate which parameters are negative 
     fn negative(&self) -> Self;    
     /// create a new unmutable coordinate which parameters are the addition of the self and the other parameter
@@ -37,7 +41,8 @@ pub trait UnmutableCoordinate<T>{
 }
 
 /// 
-pub trait MutableCoordinate<T>{
+pub trait MutableCoordinate<T>where
+T: Mul<Output = T> + Copy,{
     /// converts the coordinate into its negative representation
     fn negative(&mut self) -> ();
     /// adds the self coordinate the parameter coordinate
