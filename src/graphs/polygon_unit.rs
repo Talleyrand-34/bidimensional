@@ -31,6 +31,9 @@ impl Polygon{
         Polygon::PVec(PVec::new());
     }
 
+    pub fn new_vec() -> Self{
+        Polygon::PVec(PVec::new());
+    }
 
     pub fn add_point_single(&mut self, x:T, y:T) {
         match self{
@@ -39,6 +42,22 @@ impl Polygon{
             _ => unimplemented!(),
         }
     }
+
+    pub fn get_array(&self) -> &[ECoordinate<T>] {
+        match self {
+            Polygon::PVec(p) => p.Vec.as_slice(),
+            _ => unimplemented!(),
+        }
+    }
+
+
+    /*pub fn get_coordinates(&self){
+        match self{
+            Polygon::PVec(p)=>{
+
+            }
+
+    }*/
 
 
 }
