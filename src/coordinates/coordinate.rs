@@ -8,7 +8,7 @@ use super::safe_coordinate::SafeCoordinate;
 
 #[doc = "Esta es la enumeración `ECoordinate`."]
 
-pub enum ECoordinate {
+pub enum ECoordinate<T> {
     /// Una variante que representa una coordenada segura.
     Safe(SafeCoordinate),
     /// Una variante que representa una coordenada insegura.
@@ -17,7 +17,7 @@ pub enum ECoordinate {
 
 
 
-impl ECoordinate {
+impl<T> ECoordinate<T> {
     
     
     fn get_x(&self) -> Option<f32> {
