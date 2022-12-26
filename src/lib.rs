@@ -1,7 +1,7 @@
 //! Modules of the project
 
 mod coordinates;
-//mod polygon;
-
+mod polygon;
+mod graphs;
 
 

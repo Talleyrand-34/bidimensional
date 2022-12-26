@@ -22,7 +22,13 @@ T: Mul<Output = T> + Copy,{
 
 impl<T> ECoordinate<T> where
 T: Mul<Output = T> + Copy,{
+    fn new_safe(x:T,y:T) -> ECoordinate<T>{
+        ECoordinate::Safe(SafeCoordinate::new(x, y))
+    }
     
+    fn new_unsafe(x:T,y:T) -> ECoordinate<T>{
+        ECoordinate::Unsafe(UnsafeCoordinate::new(x, y))
+    }
     
     fn get_x(&self) -> Option<T> {
         match self {

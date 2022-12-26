@@ -1,7 +1,7 @@
 
 use std::ops::Mul;
 
-struct Adj_Graph<T>
+pub struct AdjGraph<T>
 where
     T: Mul<Output = T> + Copy,
 {
