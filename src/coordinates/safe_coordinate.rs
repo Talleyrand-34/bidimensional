@@ -30,7 +30,7 @@ use super::gen_coordinate::CoordinateBasics;
 use super::gen_coordinate::UnmutableCoordinate;
 
 
-
+#[derive(Clone, Copy, Debug)]
 pub struct SafeCoordinate{
     x: f32,
     y: f32,

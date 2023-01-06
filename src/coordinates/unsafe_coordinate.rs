@@ -7,7 +7,7 @@
 use super::gen_coordinate::CoordinateBasics;
 use super::gen_coordinate::MutableCoordinate;
 
-
+#[derive(Clone, Copy, Debug)]
 pub struct UnsafeCoordinate{
     x: f32,
     y: f32

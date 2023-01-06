@@ -1,6 +1,8 @@
 use std::marker::PhantomData;
 use super::gen_coordinate::UnmutableCoordinate;
 
+
+#[derive(Clone, Copy, Debug)]
 pub struct UnmutPhantomCoordinate<T:Copy>{
     x:T,
     y:T,
