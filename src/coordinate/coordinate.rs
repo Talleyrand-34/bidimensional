@@ -15,6 +15,10 @@ where T: Mul<Output = T> + Copy+ Add<Output = T>+Sub+ Div,
     // Phantom(PhantomData<T>),
     //
 }
+
+//These are the error codes to be called from functions
+// static is_mut_err: &str=""
+// static is_inmut_err: &str=""
 impl ECoordinate<f32> {
     pub fn new_sf32(x: f32, y: f32) -> ECoordinate<f32> {
         ECoordinate::Sf32(Safef32coordinate::new(x, y))
@@ -39,30 +43,35 @@ where
 //        ECoordinate::Unsafe(UnsafeCoordinate::new(x, y))
     }
 
-    fn get_x(&self) -> Option<T> {
+
+    }
+    fn get_x(&self) -> Result<T, &'static str> {
         match self {
             ECoordinate::Sf32(coordinate) => coordinate.get_x(),
             ECoordinate::Uf32(coordinate) => coordinate.get_x(),
-//            ECoordinate::Safe(coord) => Some(coord.get_x()),
-//            ECoordinate::Unsafe(coord) => Some(coord.get_x()),
-            _ => None,
+            //ECoordinate::Safe(coord) => Some(coord.get_x()),
+            //ECoordinate::Unsafe(coord) => Some(coord.get_x()),
+
+            _ => Err("X coordinate not available for this ECoordinate variant"),
         }
     }
 
-    fn get_y(&self) -> Option<T> {
+
+    fn get_y(&self) -> Result<T, &'static str> {
         match self {
             ECoordinate::Sf32(coordinate) => coordinate.get_y(),
             ECoordinate::Uf32(coordinate) => coordinate.get_y(),
-//            ECoordinate::Safe(coord) => Some(coord.get_y()),
-//            ECoordinate::Unsafe(coord) => Some(coord.get_y()),
+            // ECoordinate::Safe(coord) => Some(coord.get_y()),
+            // ECoordinate::Unsafe(coord) => Some(coord.get_y()),
             _ => None,
         }
     }
+    
 
-    fn negative(&self) -> Option<Self> {
+    fn negative(&self) -> Result<Self, &'static str> {
         match self {
-            ECoordinate::Sf32(coordinate) => coordinate.negative(),
-            ECoordinate::Uf32(coordinate) => coordinate.negative(),
+            ECoordinate::Sf32(coordinate) => Ok(coordinate.negative()),
+            ECoordinate::Uf32(coordinate) => Err("Permisions error: The operation should be mutable but is inmutable"),
 //            ECoordinate::Safe(coord) => Some(coord.negative()),
 //            ECoordinate::Safe(coord) => Some(ECoordinate::Safe(coord.negative())),
             _ => None,
@@ -71,85 +80,92 @@ where
 
     fn negative_mut(&mut self) -> bool {
         match self {
-
-//            ECoordinate::Unsafe(coord) => {
-                coord.negative();
+            ECoordinate::Uf32(coordinate) => {
+                coordinate.negative();
                 true
-            }
-            _ => false,
+            },
+            ECoordinate::Sf32(coordinate) => Err("Permisions error: The operation should be mutable but is inmutable"),
         }
     }
 
-    fn add(&self, altcoordinate: &Self) -> Option<Self> {
+    fn add(&self, altcoordinate: &Self) -> Result<Self, &'static str> {
         match (self, altcoordinate) {
-            (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
-                Some(ECoordinate::Safe(coord1.add(coord2)))
-            }
+            ECoordinate::Sf32(coordinate) => Ok(coordinate.add(altcoordinate)),
+            ECoordinate::Uf32(coordinate) => Err("Permisions error: The operation should be mutable but is inmutable"),
+            // (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
+            //     Some(ECoordinate::Safe(coord1.add(coord2)))
+            // }
             _ => None,
         }
     }
 
     fn add_mut(&mut self, altcoordinate: &Self) -> bool {
         match (self, altcoordinate) {
-            (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
-                coord1.add(coord2);
-                true
-            }
+            // (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
+            //     coord1.add(coord2);
+            //     true
+            // }
             _ => false,
         }
     }
-    fn sub(&self, altcoordinate: &Self) -> Option<Self> {
+    fn sub(&self, altcoordinate: &Self) -> Result<Self, &'static str> {
         match (self, altcoordinate) {
-            (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
-                Some(ECoordinate::Safe(coord1.sub(coord2)))
-            }
+            ECoordinate::Sf32(coordinate) => Ok(coordinate.sub(altcoordinate)),
+            ECoordinate::Uf32(coordinate) => Err("Permisions error: The operation should be mutable but is inmutable"),
+            // (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
+            //     Some(ECoordinate::Safe(coord1.sub(coord2)))
+            // }
             _ => None,
         }
     }
 
     fn sub_mut(&mut self, altcoordinate: &Self) -> bool {
         match (self, altcoordinate) {
-            (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
-                coord1.sub(coord2);
-                true
-            }
+            // (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
+            //     coord1.sub(coord2);
+            //     true
+            // }
             _ => false,
         }
     }
-    fn product(&self, altcoordinate: &Self) -> Option<Self> {
+    fn product(&self, altcoordinate: &Self) -> Result<Self, &'static str> {
         match (self, altcoordinate) {
-            (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
-                Some(ECoordinate::Safe(coord1.product(coord2)))
-            }
+            ECoordinate::Sf32(coordinate) => Ok(coordinate.product(altcoordinate)),
+            ECoordinate::Uf32(coordinate) => Err("Permisions error: The operation should be mutable but is inmutable"),
+            // (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
+            //     Some(ECoordinate::Safe(coord1.product(coord2)))
+            // }
             _ => None,
         }
     }
 
     fn product_mut(&mut self, altcoordinate: &Self) -> bool {
         match (self, altcoordinate) {
-            (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
-                coord1.product(coord2);
-                true
-            }
+            // (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
+            //     coord1.product(coord2);
+            //     true
+            // }
             _ => false,
         }
     }
 
-    fn true_div(&self, altcoordinate: &Self) -> Option<Self> {
+    fn true_div(&self, altcoordinate: &Self) -> Result<Self, &'static str> {
         match (self, altcoordinate) {
-            (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
-                Some(ECoordinate::Safe(coord1.true_div(coord2)))
-            }
+            ECoordinate::Sf32(coordinate) => Ok(coordinate.true_div(altcoordinate)),
+            ECoordinate::Uf32(coordinate) => Err("Permisions error: The operation should be mutable but is inmutable"),
+            // (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
+            //     Some(ECoordinate::Safe(coord1.true_div(coord2)))
+            // }
             _ => None,
         }
     }
 
     fn true_div_mut(&mut self, altcoordinate: &Self) -> bool {
         match (self, altcoordinate) {
-            (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
-                coord1.true_div(coord2);
-                true
-            }
+            // (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
+            //     coord1.true_div(coord2);
+            //     true
+            // }
             _ => false,
         }
     }
@@ -216,7 +232,7 @@ where
         }
     }
 
-    fn midpoint(&self, coord2: &Self) -> Option<ECoordinate<T>> {
+    fn midpoint(&self, coord2: &Self) -> Result<ECoordinate<T>,& 'static str> {
         match (self.get_x(), self.get_y(), coord2.get_x(), coord2.get_y()) {
             (Some(x1), Some(y1), Some(x2), Some(y2)) => Some(ECoordinate::Safe(SafeCoordinate::new((x1 + x2) / 2.0, (y1 + y2) / 2.0))),
             _ => None,
