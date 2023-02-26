@@ -24,10 +24,9 @@ impl CoordinateBasics<f32> for Unsafef32coordinate {
 
 impl MutableCoordinate<f32> for Unsafef32coordinate {
     
-    fn negative(&mut self)-> Self{
+    fn negative(&mut self)-> (){
         self.x = -self.x;
         self.y = -self.y;
-        &self
     }
     fn add(&mut self, altcoordinate: &Self) {
         self.x+=altcoordinate.x;
