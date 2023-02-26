@@ -1,57 +1,78 @@
 
 #[doc = "Esta es la enumeración `ECoordinate`."]
 #[derive(Clone, Copy, Debug)]
-#[allow(unused_variables)]
+use super::f32_inmut_coordinate::Safef32coordinate;
+use super::f32_mut_coordinate::Unsafef32coordinate;
 pub enum ECoordinate<T>
-where
-
+where T: Mul<Output = T> + Copy+ Add<Output = T>+Sub+ Div,
 {
+    Sf32(Safef32coordinate),
+    Uf32(Unsafef32coordinate),
     /// Una variante que representa una coordenada segura.
-    Safe(SafeCoordinate),
+    // Safe(SafeCoordinate),
     /// Una variante que representa una coordenada insegura.
-    Unsafe(UnsafeCoordinate),
-    Phantom(PhantomData<T>),
+    // Unsafe(UnsafeCoordinate),
+    // Phantom(PhantomData<T>),
+    //
+}
+impl ECoordinate<f32> {
+    pub fn new_sf32(x: f32, y: f32) -> ECoordinate<f32> {
+        ECoordinate::Sf32(Safef32coordinate::new(x, y))
+    }
+
+    pub fn new_uf32(x: f32, y: f32) -> ECoordinate<f32> {
+        ECoordinate::Uf32(Unsafef32coordinate::new(x, y))
+    }
 }
 
 impl<T> ECoordinate<T>
 where
-    T: Mul<Output = T> + Copy+ Add<Output = T>+Sub+ Div,
-    // T: Num,
 {
     pub fn new_safe(x: T, y: T) -> ECoordinate<T> {
-        ECoordinate::Safe(SafeCoordinate::new(x, y))
+        ECoordinate::Sf32(Safef32coordinate::new(x, y))
+
     }
 
     fn new_unsafe(x: T, y: T) -> ECoordinate<T> {
-        ECoordinate::Unsafe(UnsafeCoordinate::new(x, y))
+        ECoordinate::Uf32(Unsafef32coordinate::new(x, y))
+        
+//        ECoordinate::Unsafe(UnsafeCoordinate::new(x, y))
     }
 
     fn get_x(&self) -> Option<T> {
         match self {
-            ECoordinate::Safe(coord) => Some(coord.get_x()),
-            ECoordinate::Unsafe(coord) => Some(coord.get_x()),
+            ECoordinate::Sf32(coordinate) => coordinate.get_x(),
+            ECoordinate::Uf32(coordinate) => coordinate.get_x(),
+//            ECoordinate::Safe(coord) => Some(coord.get_x()),
+//            ECoordinate::Unsafe(coord) => Some(coord.get_x()),
             _ => None,
         }
     }
 
     fn get_y(&self) -> Option<T> {
         match self {
-            ECoordinate::Safe(coord) => Some(coord.get_y()),
-            ECoordinate::Unsafe(coord) => Some(coord.get_y()),
+            ECoordinate::Sf32(coordinate) => coordinate.get_y(),
+            ECoordinate::Uf32(coordinate) => coordinate.get_y(),
+//            ECoordinate::Safe(coord) => Some(coord.get_y()),
+//            ECoordinate::Unsafe(coord) => Some(coord.get_y()),
             _ => None,
         }
     }
 
     fn negative(&self) -> Option<Self> {
         match self {
-            ECoordinate::Safe(coord) => Some(ECoordinate::Safe(coord.negative())),
+            ECoordinate::Sf32(coordinate) => coordinate.negative(),
+            ECoordinate::Uf32(coordinate) => coordinate.negative(),
+//            ECoordinate::Safe(coord) => Some(coord.negative()),
+//            ECoordinate::Safe(coord) => Some(ECoordinate::Safe(coord.negative())),
             _ => None,
         }
     }
 
     fn negative_mut(&mut self) -> bool {
         match self {
-            ECoordinate::Unsafe(coord) => {
+
+//            ECoordinate::Unsafe(coord) => {
                 coord.negative();
                 true
             }
