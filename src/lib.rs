@@ -1,6 +1,6 @@
 //! Modules of the project
 
-mod coordinate;
+pub mod coordinate;
 // mod polygon;
 // mod graphs;
 
