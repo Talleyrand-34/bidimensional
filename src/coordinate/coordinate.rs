@@ -1,8 +1,8 @@
 
-#[doc = "Esta es la enumeración `ECoordinate`."]
-#[derive(Clone, Copy, Debug)]
 use super::f32_inmut_coordinate::Safef32coordinate;
 use super::f32_mut_coordinate::Unsafef32coordinate;
+#[doc = "Esta es la enumeración `ECoordinate`."]
+#[derive(Clone, Copy, Debug)]
 pub enum ECoordinate<T>
 where T: Mul<Output = T> + Copy+ Add<Output = T>+Sub+ Div,
 {

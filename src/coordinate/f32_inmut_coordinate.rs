@@ -46,9 +46,6 @@ impl CoordinateBasics<f32> for Safef32coordinate{
     }
     fn get_x(&self) -> f32 { self.x }
     fn get_y(&self) -> f32 { self.y }
-    fn destroy(&self) ->() {
-        drop(&self);
-    }
 
     
 }

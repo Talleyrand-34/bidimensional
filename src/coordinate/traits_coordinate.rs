@@ -18,10 +18,6 @@ pub trait CoordinateBasics<T>where
     fn get_x(&self) -> T;
     /// get y axis parameter
     fn get_y(&self) -> T;
-    /// destroy the coordinate
-    fn destroy(&self) ->(){
-        drop(self);
-    }
     
     
 }

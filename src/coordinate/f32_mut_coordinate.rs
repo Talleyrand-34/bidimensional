@@ -16,7 +16,6 @@ impl CoordinateBasics<f32> for Unsafef32coordinate {
     fn new (x: f32, y: f32) -> Unsafef32coordinate{return Unsafef32coordinate{x:x,y:y};}
     fn get_x(&self) -> f32 { self.x }
     fn get_y(&self) -> f32 { self.y }
-    fn destroy(&self) ->() {drop(self)}
 
 }
 

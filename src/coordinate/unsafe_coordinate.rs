@@ -48,9 +48,6 @@ impl<T> CoordinateBasics<T> for UnsafeCoordinate<T> where T: Copy{
 
     fn get_x(&self) -> T { self.x }
     fn get_y(&self) -> T { self.y }
-    fn destroy(&self) {
-        drop(self);
-    }
 }
 //
 // impl<T: Copy + std::ops::Neg<Output=T> + std::ops::Add<Output=T> + std::ops::Sub<Output=T> + std::ops::Mul<Output=T> + std::ops::Div<Output=T>> UnmutableCoordinate<T> for UnsafeCoordinate<T> {
