@@ -39,51 +39,41 @@ pub struct Safef32coordinate{
     //marker: PhantomData<f32>
 }
 
-impl CoordinateBasics<f32> for Safef32coordinate{
-
-    fn new (x: f32, y: f32) -> Safef32coordinate{
-    return Safef32coordinate{x:x,y:y};
+impl CoordinateBasics<f32> for Safef32coordinate {
+    fn new(x: f32, y: f32) -> Self {
+        Safef32coordinate { x, y }
     }
-    fn get_x(&self) -> f32 { self.x }
-    fn get_y(&self) -> f32 { self.y }
 
-    
+    fn get_x(&self) -> f32 {
+        self.x
+    }
+
+    fn get_y(&self) -> f32 {
+        self.y
+    }
 }
 
-
-
-
-impl UnmutableCoordinate<f32> for Safef32coordinate{
-    
-
-    fn negative(&self) -> Safef32coordinate{
-        let new_c:Safef32coordinate= Safef32coordinate{x: -self.x , y: -self.y};
-        return new_c;
+impl UnmutableCoordinate<f32> for Safef32coordinate {
+    fn negative(&self) -> Self {
+        Safef32coordinate { x: -self.x, y: -self.y }
     }
 
-    fn add(&self, altcoordinate: &Safef32coordinate) -> Safef32coordinate{
-        let new_c:Safef32coordinate= Safef32coordinate{x:self.x + altcoordinate.x, y:self.y + altcoordinate.y};
-        return new_c;
+    fn add(&self, other: &Self) -> Self {
+        Safef32coordinate { x: self.x + other.x, y: self.y + other.y }
     }
 
-    fn sub(&self, altcoordinate: &Safef32coordinate) -> Safef32coordinate{
-        let new_c:Safef32coordinate= Safef32coordinate{x:self.x - altcoordinate.x, y:self.y - altcoordinate.y};
-        return new_c;
+    fn sub(&self, other: &Self) -> Self {
+        Safef32coordinate { x: self.x - other.x, y: self.y - other.y }
     }
 
-    fn product(&self, altcoordinate: &Safef32coordinate) -> Safef32coordinate {
-        let new_c:Safef32coordinate= Safef32coordinate{x:self.x * altcoordinate.x, y:self.y * altcoordinate.y};
-        return new_c;
+    fn product(&self, other: &Self) -> Self {
+        Safef32coordinate { x: self.x * other.x, y: self.y * other.y }
     }
 
-    fn true_div(&self, altcoordinate: &Safef32coordinate) -> Safef32coordinate{
-        let new_c:Safef32coordinate= Safef32coordinate{x:self.x * altcoordinate.x, y:self.y * -altcoordinate.y};
-        return new_c;
+    fn true_div(&self, other: &Self) -> Self {
+        Safef32coordinate { x: self.x / other.x, y: self.y / other.y }
     }
-
-    
 }
-
 
 
 #[test]
