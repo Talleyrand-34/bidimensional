@@ -1,5 +1,3 @@
-
-
 //! CoordinateBasics Trait implements the basic logic over a coordinate and works like a common identifier
 //! for the coordinates on external applications.
 //!  This trait defines the basic logic over a unmutable version of a coordinate.
@@ -7,26 +5,27 @@
 //! on build up applications.
 //! MutableCoordinate trait defines the basic logic over a mutable version of a coordinate.
 //! This is for those applications that prefer speed over consistency.
-//! 
+//!
 
 use std::ops::*;
-pub trait CoordinateBasics<T>where
-    T: Copy,{
+pub trait CoordinateBasics<T>
+where
+    T: Copy,
+{
     /// create a new coordinate
-    fn new(x:T,y:T) -> Self;
+    fn new(x: T, y: T) -> Self;
     /// get the x axis parameter
     fn get_x(&self) -> T;
     /// get y axis parameter
     fn get_y(&self) -> T;
-    
-    
 }
 
-
-pub trait UnmutableCoordinate<T>where
-T: Add<Output= T> + Sub <Output = T>+ Mul<Output = T> + Div <Output = T>+Copy ,{
-    /// create a new unmutable coordinate which parameters are negative 
-    fn negative(&self) -> Self;    
+pub trait UnmutableCoordinate<T>
+where
+    T: Add<Output = T> + Sub<Output = T> + Mul<Output = T> + Div<Output = T> + Copy,
+{
+    /// create a new unmutable coordinate which parameters are negative
+    fn negative(&self) -> Self;
     /// create a new unmutable coordinate which parameters are the addition of the self and the other parameter
     fn add(&self, altcoordinate: &Self) -> Self;
     /// create a new unmutable coordinate which parameters are the substraction of the self and the other parameter
@@ -37,9 +36,11 @@ T: Add<Output= T> + Sub <Output = T>+ Mul<Output = T> + Div <Output = T>+Copy ,{
     fn true_div(&self, altcoordinate: &Self) -> Self;
 }
 
-/// 
-pub trait MutableCoordinate<T>where
-T: Add<Output= T> + Sub <Output = T>+ Mul<Output = T> + Div <Output = T>+Copy ,{
+///
+pub trait MutableCoordinate<T>
+where
+    T: Add<Output = T> + Sub<Output = T> + Mul<Output = T> + Div<Output = T> + Copy,
+{
     /// converts the coordinate into its negative representation
     fn negative(&mut self) -> ();
     /// adds the self coordinate the parameter coordinate
@@ -55,6 +56,3 @@ T: Add<Output= T> + Sub <Output = T>+ Mul<Output = T> + Div <Output = T>+Copy ,{
     /// Sets the second coordinate to y
     fn set_y(&mut self, y: T) -> ();
 }
-
-
-

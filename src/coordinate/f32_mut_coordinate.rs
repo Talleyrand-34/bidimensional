@@ -3,63 +3,63 @@
 //use src::traits_coordinate;
 //use crate::traits_coordinate::coordinate;
 
-
 use super::traits_coordinate::CoordinateBasics;
 use super::traits_coordinate::MutableCoordinate;
 
-
-pub struct Unsafef32coordinate{
+#[derive(Clone, Debug)]
+pub struct Unsafef32coordinate {
     x: f32,
-    y: f32
+    y: f32,
 }
 impl CoordinateBasics<f32> for Unsafef32coordinate {
-    fn new (x: f32, y: f32) -> Unsafef32coordinate{return Unsafef32coordinate{x:x,y:y};}
-    fn get_x(&self) -> f32 { self.x }
-    fn get_y(&self) -> f32 { self.y }
-
+    fn new(x: f32, y: f32) -> Unsafef32coordinate {
+        return Unsafef32coordinate { x: x, y: y };
+    }
+    fn get_x(&self) -> f32 {
+        self.x
+    }
+    fn get_y(&self) -> f32 {
+        self.y
+    }
 }
 
-
-
 impl MutableCoordinate<f32> for Unsafef32coordinate {
-    
-    fn negative(&mut self)-> (){
+    fn negative(&mut self) -> () {
         self.x = -self.x;
         self.y = -self.y;
     }
     fn add(&mut self, altcoordinate: &Self) {
-        self.x+=altcoordinate.x;
-        self.y+=altcoordinate.y;
+        self.x += altcoordinate.x;
+        self.y += altcoordinate.y;
     }
     fn sub(&mut self, altcoordinate: &Self) -> () {
-        self.x-=altcoordinate.x;
-        self.y-=altcoordinate.y;
+        self.x -= altcoordinate.x;
+        self.y -= altcoordinate.y;
     }
     fn product(&mut self, altcoordinate: &Self) -> () {
-        self.x*=altcoordinate.x;
-        self.y*=altcoordinate.y;
+        self.x *= altcoordinate.x;
+        self.y *= altcoordinate.y;
     }
-    
+
     fn true_div(&mut self, altcoordinate: &Self) -> () {
-        self.x*=altcoordinate.x;
-        self.y*=-altcoordinate.y;
+        self.x *= altcoordinate.x;
+        self.y *= -altcoordinate.y;
     }
     fn set_x(&mut self, x: f32) -> () {
         self.x = x;
     }
     fn set_y(&mut self, y: f32) -> () {
-        self.y= y;
+        self.y = y;
     }
 }
-
 
 #[test]
 fn test_unsafe_coordinate_basics() {
     //En los tests no se ponen los tipos
-    let coord :Unsafef32coordinate=Unsafef32coordinate::new(1.0,2.0);
+    let coord: Unsafef32coordinate = Unsafef32coordinate::new(1.0, 2.0);
     assert_eq!(1.0, coord.get_x());
     assert_eq!(2.0, coord.get_y());
-    coord.destroy();
+    
 }
 #[test]
 fn test_unsafe_coordinate_core() {
@@ -94,11 +94,11 @@ fn test_unsafe_coordinate_core() {
     coord.set_x(var_x);
     coord.set_y(var_y);
     coord.true_div(&coordb);
-    assert_eq!(var_x*var_x, coord.get_x());
-    assert_eq!(var_y*(-var_y), coord.get_y());
+    assert_eq!(var_x * var_x, coord.get_x());
+    assert_eq!(var_y * (-var_y), coord.get_y());
 
-    coord.destroy();
-    coordb.destroy();
+    
+    
 }
 
 #[test]
@@ -134,9 +134,9 @@ fn test_unsafe_coordinate_core2() {
     coord.set_x(var_x);
     coord.set_y(var_y);
     coord.true_div(&coordb);
-    assert_eq!(var_x*var_x, coord.get_x());
-    assert_eq!(var_y*(-var_y), coord.get_y());
+    assert_eq!(var_x * var_x, coord.get_x());
+    assert_eq!(var_y * (-var_y), coord.get_y());
 
-    coord.destroy();
-    coordb.destroy();
+    
+    
 }
