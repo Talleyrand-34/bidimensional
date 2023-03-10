@@ -25,7 +25,7 @@ From now on, this structure will be referred as "Safef32coordinate".
 use super::traits_coordinate::CoordinateBasics;
 use super::traits_coordinate::UnmutableCoordinate;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Copy)]
 pub struct Safef32coordinate {
     x: f32,
     y: f32,

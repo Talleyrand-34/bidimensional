@@ -6,7 +6,7 @@
 use super::traits_coordinate::CoordinateBasics;
 use super::traits_coordinate::MutableCoordinate;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Copy)]
 pub struct Unsafef32coordinate {
     x: f32,
     y: f32,
