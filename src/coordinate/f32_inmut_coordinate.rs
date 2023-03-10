@@ -79,8 +79,8 @@ impl UnmutableCoordinate<f32> for Safef32coordinate {
 
     fn true_div(&self, other: &Self) -> Self {
         Safef32coordinate {
-            x: self.x / other.x,
-            y: self.y / other.y,
+            x: self.x * other.x,
+            y: -self.y * other.y,
         }
     }
 }
