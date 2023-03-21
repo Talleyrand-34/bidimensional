@@ -36,7 +36,7 @@ impl ECoordinate<f32> {
 // //        ECoordinate::Unsafe(UnsafeCoordinate::new(x, y))
 //     }
 
-    fn get_x(&self) -> f32 {
+    pub fn get_x(&self) -> f32 {
         match self {
             ECoordinate::Sf32(coordinate) => coordinate.get_x(),
             ECoordinate::Uf32(coordinate) => coordinate.get_x(),
@@ -44,7 +44,7 @@ impl ECoordinate<f32> {
         }
     }
 
-    fn get_y(&self) -> f32 {
+     pub fn get_y(&self) -> f32 {
         match self {
             ECoordinate::Sf32(coordinate) => coordinate.get_y(),
             ECoordinate::Uf32(coordinate) => coordinate.get_y(),
@@ -52,14 +52,14 @@ impl ECoordinate<f32> {
         }
     }
 
-    fn negative(&self) -> Option<Self>{
+    pub fn negative(&self) -> Option<Self>{
         match self {
             ECoordinate::Sf32(coordinate) => Some(ECoordinate::Sf32(coordinate.negative())),
             _ => None,
         }
     }
 
-    fn negative_mut(&mut self) -> bool {
+    pub fn negative_mut(&mut self) -> bool {
         match self {
 
             ECoordinate::Uf32(coord) => {
@@ -74,7 +74,7 @@ impl ECoordinate<f32> {
         }
     }
 
-    fn add(&self, altcoordinate: &Self) -> Option<Self> {
+    pub fn add(&self, altcoordinate: &Self) -> Option<Self> {
         match (self, altcoordinate) {
             // (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
             //     Some(ECoordinate::Safe(coord1.add(coord2)))
@@ -86,7 +86,7 @@ impl ECoordinate<f32> {
         }
     }
 
-    fn add_mut(&mut self, altcoordinate: &Self) -> bool {
+    pub fn add_mut(&mut self, altcoordinate: &Self) -> bool {
         match (self, altcoordinate) {
             // (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
             //     coord1.add(coord2);
@@ -99,7 +99,7 @@ impl ECoordinate<f32> {
             _ => false,
         }
     }
-    fn sub(&self, altcoordinate: &Self) -> Option<Self> {
+    pub fn sub(&self, altcoordinate: &Self) -> Option<Self> {
         match (self, altcoordinate) {
             // (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
             //     Some(ECoordinate::Safe(coord1.sub(coord2)))
@@ -111,7 +111,7 @@ impl ECoordinate<f32> {
         }
     }
 
-    fn sub_mut(&mut self, altcoordinate: &Self) -> bool {
+    pub fn sub_mut(&mut self, altcoordinate: &Self) -> bool {
         match (self, altcoordinate) {
             // (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
             //     coord1.sub(coord2);
@@ -124,7 +124,7 @@ impl ECoordinate<f32> {
             _ => false,
         }
     }
-    fn product(&self, altcoordinate: &Self) -> Option<Self> {
+    pub fn product(&self, altcoordinate: &Self) -> Option<Self> {
         match (self, altcoordinate) {
             // (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
             //     Some(ECoordinate::Safe(coord1.product(coord2)))
@@ -137,7 +137,7 @@ impl ECoordinate<f32> {
         }
     }
 
-    fn product_mut(&mut self, altcoordinate: &Self) -> bool {
+    pub fn product_mut(&mut self, altcoordinate: &Self) -> bool {
         match (self, altcoordinate) {
             // (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
             //     coord1.product(coord2);
@@ -151,7 +151,7 @@ impl ECoordinate<f32> {
         }
     }
 
-    fn true_div(&self, altcoordinate: &Self) -> Option<Self> {
+    pub fn true_div(&self, altcoordinate: &Self) -> Option<Self> {
         match (self, altcoordinate) {
             // (ECoordinate::Safe(coord1), ECoordinate::Safe(coord2)) => {
             //     Some(ECoordinate::Safe(coord1.true_div(coord2)))
@@ -163,7 +163,7 @@ impl ECoordinate<f32> {
         }
     }
 
-    fn true_div_mut(&mut self, altcoordinate: &Self) -> bool {
+    pub fn true_div_mut(&mut self, altcoordinate: &Self) -> bool {
         match (self, altcoordinate) {
             // (ECoordinate::Unsafe(ref mut coord1), ECoordinate::Unsafe(coord2)) => {
             //     coord1.true_div(coord2);
